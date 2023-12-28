@@ -149,18 +149,8 @@ local StopCamera = require(game.ReplicatedStorage.Util.CameraShaker)StopCamera:S
     end
 end)();
 
-if game.PlaceId == 2753915549 then
-    Sea1 = true
-elseif game.PlaceId == 4442272183 then
-    Sea2 = true
-elseif game.PlaceId == 7449423635 then
-    Sea3 = true
-end
-
-
 function CheckLevel()
       local Lv = game:GetService("Players").LocalPlayer.Data.Level.Value
-      if Sea1 then
           if Lv == 1 or Lv <= 9 or SelectMonster == "Bandit [Lv. 5]" then -- Bandit
               Ms = "Bandit [Lv. 5]"
               NameQuest = "BanditQuest1"
@@ -342,8 +332,6 @@ function CheckLevel()
               CFrameQ = CFrame.new(5258.2788085938, 38.526931762695, 4050.044921875)
               CFrameMon = CFrame.new(5677.6772460938, 92.786109924316, 4966.6323242188)
           end
-      end
-      if Sea2 then
           if Lv == 700 or Lv <= 724 or SelectMonster == "Raider [Lv. 700]" then -- Raider
               Ms = "Raider [Lv. 700]"
               NameQuest = "Area1Quest"
@@ -514,8 +502,6 @@ function CheckLevel()
               CFrameQ = CFrame.new(-3054.5827636719, 236.87213134766, -10147.790039063)
               CFrameMon = CFrame.new(-3262.9301757813, 298.69036865234, -10552.529296875)
           end
-      end
-      if Sea3 then
           if Lv == 1500 or Lv <= 1524 or SelectMonster == "Pirate Millionaire [Lv. 1500]" then -- Pirate Millionaire
               Ms = "Pirate Millionaire [Lv. 1500]"
               NameQuest = "PiratePortQuest"
@@ -699,7 +685,6 @@ function CheckLevel()
               CFrameQ = CFrame.new(-2307.778076171875, 105.85140228271484, -12931.0146484375)
               CFrameMon = CFrame.new(-2307.778076171875, 105.85140228271484, -12931.0146484375)
           end
-      end
 end
 
 function TP(P1)
@@ -711,13 +696,16 @@ function TP(P1)
       elseif Distance < 1000 then
           Speed = 350
       elseif Distance >= 1000 then
-          Speed = 200
+          Speed = 400
       end
-      game:GetService("TweenService"):Create(
+      tween = game:GetService("TweenService"):Create(
           game.Players.LocalPlayer.Character.HumanoidRootPart,
           TweenInfo.new(Distance/Speed, Enum.EasingStyle.Linear),
-          {CFrame = P1}
-      ):Play()
+          {CFrame = P1})
+      tween:Play()
+      if _G.AutoFarm == false then
+          tween:Cancel()
+      end
   end
 
 spawn(function()
